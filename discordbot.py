@@ -36,7 +36,7 @@ async def on_message(message):
         # もし、送信者がbotなら無視する
         return
 
-# -----以下グローバルチャット------
+# ------以下グローバルチャット------
 
     GLOBAL_CH_NAME = "hoge-global" # グローバルチャットのチャンネル名
 
@@ -63,6 +63,6 @@ async def on_message(message):
             # メッセージを埋め込み形式で転送
             await channel.send(embed=embed)
 
-# -----ここまでグローバルチャット------
+# ------ここまでグローバルチャット------
 
 client.run(TOKEN)
