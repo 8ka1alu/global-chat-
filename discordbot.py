@@ -26,7 +26,7 @@ async def on_ready():
     embed.add_field(name="名前",value=f"{client.user.name}")
     embed.add_field(name="ID",value=f"{client.user.id}")
     embed.add_field(name="Discord ver",value=f"{discord.__version__}")
-    embed.add_field(name="----------------")
+    embed.add_field(name="----------------",value=" ")
     embed.add_field(name="状態",value="BOT再起動しました。")
     await channel.send(embed=embed) 
     await client.change_presence(status=discord.Status.idle,activity=discord.Game(name='Global Chat'))
