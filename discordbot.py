@@ -31,7 +31,10 @@ async def on_message(message):
         await channel.purge()
         embed = discord.Embed(title="起動情報",description=" ",color=0xff0000)
         embed.set_image(url=client.user.avatar_url)
-        await channel.send(embed=embed) 
+        await channel.send(embed=embed)
+
+    if message.content == '再起動1':
+        channel = client.get_channel(CHANNEL_ID)
         embed = discord.Embed(title="名前",description=f"{client.user.name}",color=0xff0000)
         embed.add_field(name="ID",value=f"{client.user.id}")
         embed.add_field(name="nDiscord ver",value=f"{discord.__version__}")
