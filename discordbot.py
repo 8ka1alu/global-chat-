@@ -22,7 +22,7 @@ async def on_ready():
     channel = client.get_channel(CHANNEL_ID)
     await channel.purge()
     embed = discord.Embed(title="起動情報",description=" ",color=0xff0000)
-    embed.set_thumbnail(url="画像url")
+    embed.set_thumbnail(url=AppInfo.icon_url)
     embed.add_field(name="名前",value=f"{client.user.name}")
     embed.add_field(name="ID",value=f"{client.user.id}")
     embed.add_field(name="Discord ver",value=f"{discord.__version__}")
