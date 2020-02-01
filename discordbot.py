@@ -4,7 +4,7 @@ import os
 # トークン
 TOKEN = os.environ['DISCORD_BOT_TOKEN']
 
-CHANNEL_ID = 0 # 起動メッセージチャンネル
+CHANNEL_ID = 673191477412757554 # 起動メッセージチャンネル
 ksi_ver = '6.0.1'
 discord_py_ver = '3.7.3'
 
@@ -21,11 +21,14 @@ async def on_ready():
     print('Hello World,リマインドbotプログラム「project-RRN」、起動しました')
     channel = client.get_channel(CHANNEL_ID)
     await channel.purge()
-    await channel.send(f'名前:{client.user.name}')  # ボットの名前
-    await channel.send(f'ID:{client.user.id}')  # ボットのID
-    await channel.send(f'Discord ver:{discord.__version__}')  # discord.pyのバージョン
-    await channel.send('----------------')
-    await channel.send('状態：BOT再起動しました。')   
+    embed = discord.Embed(title="起動情報",description=" ",color=0xff0000)
+    embed.set_thumbnail(url="画像url")
+    embed.add_field(name="名前",value=f"{client.user.name}")
+    embed.add_field(name="ID",value=f"{client.user.id}")
+    embed.add_field(name="Discord ver",value=f"{discord.__version__}")
+    embed.add_field(name="----------------")
+    embed.add_field(name="状態",value="BOT再起動しました。")
+    await channel.send(embed=embed) 
     await client.change_presence(status=discord.Status.idle,activity=discord.Game(name='Global Chat'))
     
 
