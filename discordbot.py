@@ -38,16 +38,24 @@ async def on_message(message):
 
 # ------以下グローバルチャット------
 
-    GLOBAL_CH_NAME = "hoge-global" # グローバルチャットのチャンネル名
+    GLOBAL_CH_NAME1 = "operation-global-old" # グローバルチャット(embed)のチャンネル名
+    GLOBAL_CH_NAME2 = "operation-global" # グローバルチャット(webhooks)のチャンネル名
+    GLOBAL_WEBHOOK_NAME = "operation-global-wh" # グローバルチャットのWebhook名
 
-    if message.channel.name == GLOBAL_CH_NAME:
+    if message.channel.name == GLOBAL_CH_NAME1 or message.channel.name == GLOBAL_CH_NAME2:
         # hoge-globalの名前をもつチャンネルに投稿されたので、メッセージを転送する
 
         await message.delete() # 元のメッセージは削除しておく
 
+        if 'discord.gg' in message.content:
+            await message.channel.send("ここで招待は送れません。")
+            return # 招待は送れません
+
         channels = client.get_all_channels()
-        global_channels = [ch for ch in channels if ch.name == GLOBAL_CH_NAME]
         # channelsはbotの取得できるチャンネルのイテレーター
+        
+        # embed式
+        global_channels = [ch for ch in channels if ch.name == GLOBAL_CH_NAME1]
         # global_channelsは hoge-global の名前を持つチャンネルのリスト
 
         embed = discord.Embed(title="hoge-global",
@@ -62,6 +70,20 @@ async def on_message(message):
         for channel in global_channels:
             # メッセージを埋め込み形式で転送
             await channel.send(embed=embed)
+
+        # webhooks式
+        global_channels2 = [ch for ch in channels if ch.name == GLOBAL_CH_NAME2]
+
+        for channel in global_channels2:
+            ch_webhooks = await channel.webhooks()
+            webhook = discord.utils.get(ch_webhooks, name=GLOBAL_WEBHOOK_NAME)
+
+            if webhook is None:
+                # そのチャンネルに hoge-webhook というWebhookは無かったので無視
+                continue
+            await webhook.send(content=message.content,
+                username=message.author.name,
+                avatar_url=message.author.avatar_url_as(format="png"))
 
 # ------ここまでグローバルチャット------
 
