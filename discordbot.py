@@ -5,7 +5,7 @@ import os
 TOKEN = os.environ['DISCORD_BOT_TOKEN']
 
 CHANNEL_ID = 673191477412757554 # 起動メッセージチャンネル
-great_owner_id = 0 # 作者ID
+great_owner_id = 459936557432963103 # 作者ID
 
 GLOBAL_CH_NAME1 = "operation-global-old" # グローバルチャット(embed)のチャンネル名
 GLOBAL_CH_NAME2 = "operation-global" # グローバルチャット(webhooks)のチャンネル名
