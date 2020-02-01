@@ -33,7 +33,7 @@ async def on_message(message):
         embed.set_thumbnail(url=client.user.avatar_url)
         await channel.send(embed=embed) 
         tmp = await channel.send("再起動") # 編集するメッセージを保持
-        await tmp.edit(content = f"> 名前:{client.user.name}\nID:{client.user.id}\nDiscord ver:{discord.__version__}\n----------------\n状態:BOT再起動しました。")
+        await tmp.edit(content = f">>> 名前:{client.user.name}\nID:{client.user.id}\nDiscord ver:{discord.__version__}\n----------------\n状態:BOT再起動しました。")
 
     if message.author.bot:
         # もし、送信者がbotなら無視する
