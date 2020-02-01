@@ -20,19 +20,19 @@ async def on_ready():
     print('----------------')
     print('Hello World,リマインドbotプログラム「project-RRN」、起動しました')
     channel = client.get_channel(CHANNEL_ID)
-    await channel.send("再起動")
+    await channel.send("再起動1")
     await client.change_presence(status=discord.Status.idle,activity=discord.Game(name='Global Chat'))
     
 
 @client.event
 async def on_message(message):
-    if message.content == '再起動':
+    if message.content == '再起動1':
         channel = client.get_channel(CHANNEL_ID)
         await channel.purge()
         embed = discord.Embed(title="起動情報",description=" ",color=0xff0000)
         embed.set_thumbnail(url=client.user.avatar_url)
         await channel.send(embed=embed) 
-        tmp = await channel.send("再起動") # 編集するメッセージを保持
+        tmp = await channel.send("再起動2") # 編集するメッセージを保持
         await tmp.edit(content = f">>> 名前:{client.user.name}\nID:{client.user.id}\nDiscord ver:{discord.__version__}\n----------------\n状態:BOT再起動しました。")
 
     if message.author.bot:
