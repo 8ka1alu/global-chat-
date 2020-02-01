@@ -30,10 +30,14 @@ async def on_message(message):
         channel = client.get_channel(CHANNEL_ID)
         await channel.purge()
         embed = discord.Embed(title="起動情報",description=" ",color=0xff0000)
-        embed.set_thumbnail(url=client.user.avatar_url)
+        embed.set_image(url=client.user.avatar_url)
         await channel.send(embed=embed) 
-        tmp = await channel.send("再起動2") # 編集するメッセージを保持
-        await tmp.edit(content = f">>> 名前:{client.user.name}\nID:{client.user.id}\nDiscord ver:{discord.__version__}\n----------------\n状態:BOT再起動しました。")
+        embed = discord.Embed(title="名前",description=f"{client.user.name}",color=0xff0000)
+        embed.add_field(name="ID",value=f"{client.user.id}")
+        embed.add_field(name="nDiscord ver",value=f"{discord.__version__}")
+        embed.add_field(name=" ",value="----------------")
+        embed.add_field(name="状態",value="BOT再起動しました。")
+        await channel.send(embed=embed)
 
     if message.author.bot:
         # もし、送信者がbotなら無視する
