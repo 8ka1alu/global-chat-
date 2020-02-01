@@ -5,8 +5,11 @@ import os
 TOKEN = os.environ['DISCORD_BOT_TOKEN']
 
 CHANNEL_ID = 673191477412757554 # 起動メッセージチャンネル
-ksi_ver = '6.0.1'
-discord_py_ver = '3.7.3'
+great_owner_id = 0 # 作者ID
+
+GLOBAL_CH_NAME1 = "operation-global-old" # グローバルチャット(embed)のチャンネル名
+GLOBAL_CH_NAME2 = "operation-global" # グローバルチャット(webhooks)のチャンネル名
+GLOBAL_WEBHOOK_NAME = "operation-global-wh" # グローバルチャットのWebhook名
 
 # 接続に必要なオブジェクトを生成
 client = discord.Client()
@@ -24,7 +27,7 @@ async def on_ready():
     embed = discord.Embed(title="起動情報",description=" ",color=0xff0000)
     embed.set_image(url=client.user.avatar_url)
     await channel.send(embed=embed)
-    await channel.send(f"名前:{client.user.name}\nID:{client.user.id}\nDiscord ver:{discord.__version__}\n----------------\n状態:正常起動 ")
+    await channel.send(f"名前:{client.user.name}\nID:{client.user.id}\nDiscord ver:{discord.__version__}\n--------------------------------\n状態:正常起動 ")
     await client.change_presence(status=discord.Status.idle,activity=discord.Game(name='Global Chat'))
     
 
@@ -35,11 +38,35 @@ async def on_message(message):
         # もし、送信者がbotなら無視する
         return
 
-# ------以下グローバルチャット------
+    if message.content == '!restart': 
+        if message.author.id == great_owner_id:
+            await message.channel.send('再起動します')
+            await asyncio.sleep(0.5)
+            await client.logout()  
+            os.execv(sys.executable,[sys.executable, os.path.join(sys.path[0], __file__)] + sys.argv[1:])  
+        if not message.author.id == great_owner_id:
+            await message.channel.send('貴方にこのコマンドの使用権限はありません')   
 
-    GLOBAL_CH_NAME1 = "operation-global-old" # グローバルチャット(embed)のチャンネル名
-    GLOBAL_CH_NAME2 = "operation-global" # グローバルチャット(webhooks)のチャンネル名
-    GLOBAL_WEBHOOK_NAME = "operation-global-wh" # グローバルチャットのWebhook名
+    if message.content == '!webhook':
+        await message.delete()
+        if message.author.id == great_owner_id:
+            webhooks = await message.channel.webhooks() # 既存のwebhookの取得
+    
+            if not webhooks:
+                await message.channel.send("Webhookがないので作成します。")
+                try:
+                    await message.channel.create_webhook(name=GLOBAL_WEBHOOK_NAME)
+                except:
+                    await message.channel.send("Webhookの作成に失敗しました。")
+                else:
+                    await message.channel.send("作成しました(name="+GLOBAL_WEBHOOK_NAME+")")
+            else:
+                await message.channel.send("既に作成されています。")
+        else:
+            await message.channel.send("貴方はこのコマンドを扱えません")
+        return
+
+# ------以下グローバルチャット------
 
     if message.channel.name == GLOBAL_CH_NAME1 or message.channel.name == GLOBAL_CH_NAME2:
         # hoge-globalの名前をもつチャンネルに投稿されたので、メッセージを転送する
