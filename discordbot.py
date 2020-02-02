@@ -81,8 +81,6 @@ async def on_message(message):
         channels = client.get_all_channels()
         # channelsはbotの取得できるチャンネルのイテレーター
 
-    if message.channel.name == GLOBAL_CH_NAME2 or message.channel.name == GLOBAL_CH_NAME1:
-            
         # embed式
         global_channels = [ch for ch in channels if ch.name == GLOBAL_CH_NAME1]
         # global_channelsは hoge-global の名前を持つチャンネルのリスト
@@ -109,7 +107,7 @@ async def on_message(message):
 
             if webhook is None:
                 # そのチャンネルに hoge-webhook というWebhookは無かったので無視
-                continue
+                return
             await webhook.send(content=message.content,
                 username=message.author.name,
                 avatar_url=message.author.avatar_url_as(format="png"))
