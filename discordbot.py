@@ -99,9 +99,9 @@ async def on_message(message):
             await channel.send(embed=embed)
 
         # webhooks式
-        global_channels2 = [ch for ch in channels if ch.name == GLOBAL_CH_NAME2]
+        global_channels = [ch for ch in channels if ch.name == GLOBAL_CH_NAME2]
 
-        for channel in global_channels2:
+        for channel in global_channels:
             ch_webhooks = await channel.webhooks()
             webhook = discord.utils.get(ch_webhooks, name=GLOBAL_WEBHOOK_NAME)
 
