@@ -80,7 +80,9 @@ async def on_message(message):
 
         channels = client.get_all_channels()
         # channelsはbotの取得できるチャンネルのイテレーター
-        
+
+    if message.channel.name == GLOBAL_CH_NAME2 or message.channel.name == GLOBAL_CH_NAME1:
+            
         # embed式
         global_channels = [ch for ch in channels if ch.name == GLOBAL_CH_NAME1]
         # global_channelsは hoge-global の名前を持つチャンネルのリスト
