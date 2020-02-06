@@ -34,9 +34,9 @@ async def on_message(message):
 
     global baner_count
     
-    if message.author.bot:
+    #if message.author.bot:
         # もし、送信者がbotなら無視する
-        return
+        #return
 
     if message.content == "!baner":
         if baner_count == 1:
