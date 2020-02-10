@@ -49,7 +49,7 @@ async def on_message(message):
     if not message.author.bot:
         msg_count += 1
         channel = client.get_channel(CHANNEL_ID2)
-        await channel.edit(name='メッセージ数：' + msg_count)
+        await channel.edit(name=msg_count)
 
     if message.author.bot:
         # もし、送信者がbotなら無視する
