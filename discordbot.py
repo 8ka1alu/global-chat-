@@ -6,8 +6,10 @@ from datetime import datetime
 TOKEN = os.environ['DISCORD_BOT_TOKEN']
 
 CHANNEL_ID = 673191477412757554 # 起動メッセージチャンネル
+CHANNEL_ID2 = 676132871257194497
 great_owner_id = 459936557432963103 # 作者ID
 baner_count = 0
+msg_count = 0
 
 # 接続に必要なオブジェクトを生成
 client = discord.Client()
@@ -34,9 +36,7 @@ async def on_ready():
 async def on_message(message):
 
     global baner_count
-    #if message.author.bot:
-        # もし、送信者がbotなら無視する
-        #return
+    global msg_count
 
     if message.content == "!baner":
         if baner_count == 1:
@@ -45,5 +45,14 @@ async def on_message(message):
             baner_count = 1
     elif message.content == "!check":
         await message.channel.send(baner_count)
-    
+
+    if not message.author.bot:
+        msg_count += 1
+        channel = client.get_channel(CHANNEL_ID2)
+        await channel.edit(name='メッセージ数：' + msg_count)
+
+    if message.author.bot:
+        # もし、送信者がbotなら無視する
+        return
+
 client.run(TOKEN)
