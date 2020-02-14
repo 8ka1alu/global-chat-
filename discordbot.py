@@ -11,7 +11,8 @@ CHANNEL_ID2 = 676132871257194497
 great_owner_id = 459936557432963103 or 675574345992634417 # 作者ID
 baner_count = 0
 msg_count = 0
-
+color_code = random.choice((0,0x1abc9c,0x11806a,0x2ecc71,0x1f8b4c,0x3498db,0x206694,0x9b59b6,0x71368a,0xe91e63,0xad1457,0xf1c40f,0xc27c0e,0xe67e22,0x95a5a6,0x607d8b,0x979c9f,0x546e7a,0x7289da,0x99aab5))
+    
 # 接続に必要なオブジェクトを生成
 client = discord.Client()
 
@@ -42,16 +43,20 @@ async def on_message(message):
         if message.author.id == great_owner_id:
             if baner_count == 2:
                 baner_count = 0
-                await message.channel.send(f"モード変更：" + str(baner_count))
+                embed = discord.Embed(title=f"モード変更",description=str(baner_count),color=color_code)
+                await message.channel.send(embed=embed)
 
             elif baner_count < 2:
                 baner_count += 1
-                await message.channel.send(f"モード変更：" + str(baner_count))
+                embed = discord.Embed(title=f"モード確認",description=str(baner_count),color=color_code)
+                await message.channel.send(embed=embed)
+
         if message.author.id == great_owner_id:
             await message.channel.send("貴方は使えません。")
 
     elif message.content == "!check":
-        await message.channel.send(f"モード確認：" + str(baner_count))
+        embed = discord.Embed(title=f"モード変更",description=str(baner_count),color=color_code)
+        await message.channel.send(embed=embed)
 
     if message.author.bot:
         # もし、送信者がbotなら無視する
