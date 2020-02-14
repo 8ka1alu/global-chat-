@@ -49,7 +49,7 @@ async def on_message(message):
         # もし、送信者がbotなら無視する
         return
 
-    if message.content == "ジャンケン":
+    if message.content == "じゃんけん":
 
         if baner_count == 0:
 
