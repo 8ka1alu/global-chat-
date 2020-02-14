@@ -39,11 +39,11 @@ async def on_message(message):
     global baner_count
     
     if message.content == "!baner":
-        if baner_count == 1:
+        if baner_count == 2:
             baner_count = 0
             await message.channel.send(f"モード変更：" + str(baner_count))
 
-        elif baner_count == 0:
+        elif baner_count < 2:
             baner_count += 1
             await message.channel.send(f"モード変更：" + str(baner_count))
 
