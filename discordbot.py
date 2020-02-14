@@ -43,13 +43,13 @@ async def on_message(message):
         if message.author.id == great_owner_id:
             if baner_count == 2:
                 baner_count = 0
-                await message.channel.send("モード変更：" + str(baner_count))
+                await message.channel.send(f"モード変更：" + str(baner_count))
 
             elif baner_count < 2:
                 baner_count += 1
-                await message.channel.send("モード変更：" + str(baner_count))
+                await message.channel.send(f"モード変更：" + str(baner_count))
 
-        if message.author.id == great_owner_id:
+        if not message.author.id == great_owner_id:
             await message.channel.send("貴方は使えません。")
 
     elif message.content == "!check":
