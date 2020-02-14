@@ -100,6 +100,7 @@ async def on_message(message):
                 elif not reply.content == "グー" or reply.content == "チョキ" or reply.content == "パー":
                     await message.channel.send("不適切な返事です。\nあなたの負け！")
                     return
+                return
 
         elif baner_count == 1:
 
