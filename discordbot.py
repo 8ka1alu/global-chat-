@@ -40,14 +40,14 @@ async def on_message(message):
     if message.content == "!baner":
         if baner_count == 1:
             baner_count = 0
-            await message.channel.send(f"モード変更：" + baner_count)
+            await message.channel.send(f"モード変更：" + str(baner_count))
 
         elif baner_count == 0:
             baner_count += 1
-            await message.channel.send(f"モード変更：" + baner_count)
+            await message.channel.send(f"モード変更：" + str(baner_count))
 
     elif message.content == "!check":
-        await message.channel.send(f"モード：" + baner_count)
+        await message.channel.send(f"モード：" + str(baner_count))
 
     if message.author.bot:
         # もし、送信者がbotなら無視する
