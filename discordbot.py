@@ -1,6 +1,7 @@
 import discord 
 import os
 from datetime import datetime
+import random
 
 # トークン
 TOKEN = os.environ['DISCORD_BOT_TOKEN']
@@ -47,7 +48,7 @@ async def on_message(message):
             await message.channel.send(f"モード変更：" + str(baner_count))
 
     elif message.content == "!check":
-        await message.channel.send(f"モード：" + str(baner_count))
+        await message.channel.send(f"モード確認：" + str(baner_count))
 
     if message.author.bot:
         # もし、送信者がbotなら無視する
@@ -56,6 +57,51 @@ async def on_message(message):
     if message.content == "じゃんけん":
 
         if baner_count == 0:
+
+            await message.channel.send( "最初はグー、じゃんけん" )
+        
+            def jankencheck(m):
+                return m.content == "グー" or "チョキ" or "パー" and m.author == message.author
+            try:
+                reply = await client.wait_for( "message" , check = jankencheck , timeout = 10.0 )
+            except asyncio.TimeoutError:
+                await message.channel.send( "後出しはいけませんよ！\nあなたの負け！" )
+            else:
+                if reply.content == "チョキ":
+                    prob = random.random()
+    
+                    if prob < 0.2:
+                        await message.channel.send('パーを出しました。\nあなたの勝ち！')
+                    elif prob < 0.6:
+                        await message.channel.send('チョキを出しました。\nあいこです！')
+                    else:
+                        await message.channel.send('グーを出しました。\nあなたの負け！')
+
+                elif reply.content == "パー":
+                    prob = random.random()
+    
+                    if prob < 0.2:
+                        await message.channel.send('グーを出しました。\nあなたの勝ち！')
+                    elif prob < 0.6:
+                        await message.channel.send('パーを出しました。\nあいこです！')
+                    else:
+                        await message.channel.send('チョキを出しました。\nあなたの負け！')
+
+                elif reply.content == "グー":
+                    prob = random.random()
+    
+                    if prob < 0.2:
+                        await message.channel.send('チョキを出しました。\nあなたの勝ち！')
+                    elif prob < 0.6:
+                        await message.channel.send('グーを出しました。\nあいこです！')
+                    else:
+                        await message.channel.send('パーを出しました。\nあなたの負け！')
+
+                elif not reply.content == "グー" or reply.content == "チョキ" or reply.content == "パー":
+                    await message.channel.send("不適切な返事です。\nあなたの負け！")
+                    return
+
+        elif baner_count == 1:
 
             await message.channel.send( "最初はグー、じゃんけん" )
         
@@ -80,8 +126,7 @@ async def on_message(message):
                     return
 
                 await message.channel.send( result + "を出しました \nあなたの負け！" )
+                return
 
-        elif baner_count == 1:
-            return
 
 client.run(TOKEN)
