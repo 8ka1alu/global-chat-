@@ -36,8 +36,7 @@ async def on_ready():
 async def on_message(message):
 
     global baner_count
-    global msg_count
-
+    
     if message.content == "!baner":
         if baner_count == 1:
             baner_count = 0
@@ -46,13 +45,39 @@ async def on_message(message):
     elif message.content == "!check":
         await message.channel.send(baner_count)
 
-    if not message.author.bot:
-        msg_count += 1
-        channel = client.get_channel(CHANNEL_ID2)
-        await channel.edit(name=msg_count)
-
     if message.author.bot:
         # もし、送信者がbotなら無視する
         return
+
+    if message.content == "ジャンケン":
+
+        if baner_count == 0:
+
+            await message.channel.send( "最初はグー、じゃんけん" )
+        
+            def jankencheck(m):
+                return m.content == "グー" or "チョキ" or "パー" and m.author == message.author
+            try:
+                reply = await client.wait_for( "message" , check = jankencheck , timeout = 10.0 )
+            except asyncio.TimeoutError:
+                await message.channel.send( "後出しはいけませんよ！\nあなたの負け！" )
+            else:
+                if reply.content == "チョキ":
+                    result = "グー"
+
+                elif reply.content == "パー":
+                    result = "チョキ"
+
+                elif reply.content == "グー":
+                    result = "パー"
+     
+                elif not reply.content == "グー" or reply.content == "チョキ" or reply.content == "パー":
+                    await message.channel.send("不適切な返事です。\nあなたの負け！")
+                    return
+
+                await message.channel.send( result + "を出しました \nあなたの負け！" )
+
+        elif baner_count == 1:
+            return
 
 client.run(TOKEN)
