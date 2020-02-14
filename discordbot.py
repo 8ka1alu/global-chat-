@@ -32,7 +32,6 @@ async def on_ready():
     await channel.send(f"名前:{client.user.name}\nID:{client.user.id}\nDiscord ver:{discord.__version__}\n--------------------------------\n状態:正常起動 ")
     await client.change_presence(status=discord.Status.idle,activity=discord.Game(name='Global Chat'))  
 
-
 @client.event
 async def on_message(message):
 
