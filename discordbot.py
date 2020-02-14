@@ -8,7 +8,7 @@ TOKEN = os.environ['DISCORD_BOT_TOKEN']
 
 CHANNEL_ID = 673191477412757554 # 起動メッセージチャンネル
 CHANNEL_ID2 = 676132871257194497
-great_owner_id = 459936557432963103 # 作者ID
+great_owner_id = 459936557432963103 or 675574345992634417 # 作者ID
 baner_count = 0
 msg_count = 0
 
@@ -39,13 +39,16 @@ async def on_message(message):
     global baner_count
     
     if message.content == "!baner":
-        if baner_count == 2:
-            baner_count = 0
-            await message.channel.send(f"モード変更：" + str(baner_count))
+        if message.author.id == great_owner_id:
+            if baner_count == 2:
+                baner_count = 0
+                await message.channel.send(f"モード変更：" + str(baner_count))
 
-        elif baner_count < 2:
-            baner_count += 1
-            await message.channel.send(f"モード変更：" + str(baner_count))
+            elif baner_count < 2:
+                baner_count += 1
+                await message.channel.send(f"モード変更：" + str(baner_count))
+        if message.author.id == great_owner_id:
+            await message.channel.send("貴方は使えません。")
 
     elif message.content == "!check":
         await message.channel.send(f"モード確認：" + str(baner_count))
