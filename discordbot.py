@@ -43,19 +43,21 @@ async def on_message(message):
         if message.author.id == great_owner_id:
             if baner_count == 2:
                 baner_count = 0
-                embed = discord.Embed(title=f"モード変更",description=baner_count,color=color_code)
+                bc = str(baner_count)
+                embed = discord.Embed(title=f"モード変更",description=bc,color=color_code)
                 await message.channel.send(embed=embed)
 
             elif baner_count < 2:
                 baner_count += 1
-                embed = discord.Embed(title=f"モード変更",description=baner_count,color=color_code)
+                bc = str(baner_count)
+                embed = discord.Embed(title=f"モード変更",description=bc,color=color_code)
                 await message.channel.send(embed=embed)
 
         if message.author.id == great_owner_id:
             await message.channel.send("貴方は使えません。")
 
     elif message.content == "!check":
-        embed = discord.Embed(title=f"モード確認",description=baner_count,color=color_code)
+        embed = discord.Embed(title=f"モード確認",description=str(baner_count),color=color_code)
         await message.channel.send(embed=embed)
 
     if message.author.bot:
